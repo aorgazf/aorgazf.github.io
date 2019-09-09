@@ -6,28 +6,9 @@
     <description>Recent content in Tags on ÁLVARO ORGAZ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 05 Nov 2018 21:05:33 +0530</lastBuildDate>
     
 	<atom:link href="https://www.alvaroorgaz.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Hardware Security</title>
-      <link>https://www.alvaroorgaz.com/tags/hardware-security/</link>
-      <pubDate>Mon, 05 Nov 2018 21:05:33 +0530</pubDate>
-      
-      <guid>https://www.alvaroorgaz.com/tags/hardware-security/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>IoT</title>
-      <link>https://www.alvaroorgaz.com/tags/iot/</link>
-      <pubDate>Mon, 05 Nov 2018 21:05:33 +0530</pubDate>
-      
-      <guid>https://www.alvaroorgaz.com/tags/iot/</guid>
-      <description></description>
-    </item>
     
   </channel>
 </rss>

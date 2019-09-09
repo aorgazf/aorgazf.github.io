@@ -3,53 +3,26 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://www.alvaroorgaz.com/post/superducky/</loc>
-    <lastmod>2018-11-05T21:05:33+05:30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.alvaroorgaz.com/categories/</loc>
-    <lastmod>2018-11-05T21:05:33+05:30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.alvaroorgaz.com/categories/cybersecurity/</loc>
-    <lastmod>2018-11-05T21:05:33+05:30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.alvaroorgaz.com/tags/hardware-security/</loc>
-    <lastmod>2018-11-05T21:05:33+05:30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.alvaroorgaz.com/tags/iot/</loc>
-    <lastmod>2018-11-05T21:05:33+05:30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.alvaroorgaz.com/post/</loc>
-    <lastmod>2018-11-05T21:05:33+05:30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.alvaroorgaz.com/tags/</loc>
-    <lastmod>2018-11-05T21:05:33+05:30</lastmod>
+    <loc>https://www.alvaroorgaz.com/contact/</loc>
+    <lastmod>2016-11-06T13:00:25+05:30</lastmod>
   </url>
   
   <url>
     <loc>https://www.alvaroorgaz.com/</loc>
-    <lastmod>2018-11-05T21:05:33+05:30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.alvaroorgaz.com/contact/</loc>
     <lastmod>2016-11-06T13:00:25+05:30</lastmod>
   </url>
   
   <url>
     <loc>https://www.alvaroorgaz.com/about/</loc>
     <lastmod>2016-11-05T21:05:33+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.alvaroorgaz.com/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>https://www.alvaroorgaz.com/tags/</loc>
   </url>
   
 </urlset>
