@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>ÁLVARO ORGAZ</title>
+    <title>Álvaro Orgaz</title>
     <link>https://www.alvaroorgaz.com/</link>
-    <description>Recent content on ÁLVARO ORGAZ</description>
+    <description>Recent content on Álvaro Orgaz</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 06 Nov 2016 13:00:25 +0530</lastBuildDate>
+    <lastBuildDate>Fri, 06 Sep 2019 21:05:33 +0400</lastBuildDate>
     
 	<atom:link href="https://www.alvaroorgaz.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Get in touch</title>
-      <link>https://www.alvaroorgaz.com/contact/</link>
-      <pubDate>Sun, 06 Nov 2016 13:00:25 +0530</pubDate>
+      <title>SuperDucky</title>
+      <link>https://www.alvaroorgaz.com/post/superducky/</link>
+      <pubDate>Mon, 05 Nov 2018 21:05:33 +0530</pubDate>
       
-      <guid>https://www.alvaroorgaz.com/contact/</guid>
-      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non lectus vitae dolor gravida consequat. In non gravida nulla. Aenean libero mi, bibendum et interdum quis, mollis eget diam. Morbi non libero quis tellus volutpat molestie. In dui neque, vestibulum at arcu dictum, ultrices sagittis ligula. Suspendisse sit amet varius turpis. Etiam porta facilisis iaculis. Maecenas laoreet a sapien vel pellentesque. Interdum et malesuada fames ac ante ipsum primis in faucibus.</description>
+      <guid>https://www.alvaroorgaz.com/post/superducky/</guid>
+      <description>&lt;p&gt;SuperDucky is an enhanced version of &lt;a href=&#34;https://hakshop.com/products/usb-rubber-ducky-deluxe&#34;&gt;Hack5 Rubber Ducky&lt;/a&gt; BadUSB.&lt;/p&gt;</description>
     </item>
     
     <item>
-      <title>About me</title>
+      <title>About</title>
       <link>https://www.alvaroorgaz.com/about/</link>
-      <pubDate>Sat, 05 Nov 2016 21:05:33 +0530</pubDate>
+      <pubDate>Fri, 06 Sep 2019 21:05:33 +0400</pubDate>
       
       <guid>https://www.alvaroorgaz.com/about/</guid>
-      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non lectus vitae dolor gravida consequat. In non gravida nulla. Aenean libero mi, bibendum et interdum quis, mollis eget diam. Morbi non libero quis tellus volutpat molestie. In dui neque, vestibulum at arcu dictum, ultrices sagittis ligula. Suspendisse sit amet varius turpis. Etiam porta facilisis iaculis. Maecenas laoreet a sapien vel pellentesque. Interdum et malesuada fames ac ante ipsum primis in faucibus.</description>
+      <description>Álvaro Orgaz is an Information Security professional currently working for a National Security company in Abu Dhabi. At the age of 9 started coding on a Commodore PET 4032 until it ran out of memory, since then he has been passionate about computers, electronics and technology.
+He enjoys researching and engaging into all sorts of hacking projects to keep his skills sharp, from hardware security to machine learning or reverse engineering.</description>
     </item>
     
   </channel>

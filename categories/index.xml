@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on ÁLVARO ORGAZ</title>
+    <title>Categories on Álvaro Orgaz</title>
     <link>https://www.alvaroorgaz.com/categories/</link>
-    <description>Recent content in Categories on ÁLVARO ORGAZ</description>
+    <description>Recent content in Categories on Álvaro Orgaz</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Mon, 05 Nov 2018 21:05:33 +0530</lastBuildDate>
     
 	<atom:link href="https://www.alvaroorgaz.com/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Cybersecurity</title>
+      <link>https://www.alvaroorgaz.com/categories/cybersecurity/</link>
+      <pubDate>Mon, 05 Nov 2018 21:05:33 +0530</pubDate>
+      
+      <guid>https://www.alvaroorgaz.com/categories/cybersecurity/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>
