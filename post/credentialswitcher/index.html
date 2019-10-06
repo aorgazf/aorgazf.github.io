@@ -24,7 +24,7 @@
         "datePublished": "2019-10-06 21:08:33 \x2b0530 \x2b0530",
         "dateModified" : "2019-10-06 21:08:33 \x2b0530 \x2b0530",
         "url" : "https:\/\/www.alvaroorgaz.com\/post\/credentialswitcher\/",
-        "wordCount" : "1366",
+        "wordCount" : "1339",
         "image" : "https://www.alvaroorgaz.com//img/Software-Engineering-2.jpg"",
         "keywords" : [ ""Ransomware"",""PowerShell"","Blog" ]   
     }
@@ -45,9 +45,9 @@
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
-<link href="https://www.alvaroorgaz.com/css/style.css?v=1570384351" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+<link href="https://www.alvaroorgaz.com/css/style.css?v=1570384752" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
 
-<link href="https://www.alvaroorgaz.com/css/custom.css?v=1570384351" rel="stylesheet" type='text/css' media='all'>
+<link href="https://www.alvaroorgaz.com/css/custom.css?v=1570384752" rel="stylesheet" type='text/css' media='all'>
 <link rel="shortcut icon" href="https://www.alvaroorgaz.com/img/favicon.ico" type="image/x-icon">
 <link rel="icon" href="https://www.alvaroorgaz.com/img/favicon.ico" type="image/x-icon">
 
@@ -251,194 +251,163 @@
 <h4 id="credential-switcher-server">Credential Switcher Server</h4>
 
 <p>The Server module is meant to be run under administrator privileges when the computer is turned on. Its main purpose is to reset (disable and re-enable) the network adapter in order to close any lingering SMB connections.</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell"><span style="color:#8f5902;font-style:italic"># Action - Reset Network Adapter</span>
+<span style="color:#000">$NetworkAdapter</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#4e9a06">&#39;Ethernet&#39;</span>
+<span style="color:#204a87;font-weight:bold">Function</span> <span style="color:#000">ResetNetworkAdapter</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#204a87">Disable-NetAdapter</span> <span style="color:#000">-Name</span> <span style="color:#000">$NetworkAdapter</span> <span style="color:#000">-Confirm</span><span style="color:#a40000">:</span><span style="color:#000">$false</span>
+    <span style="color:#204a87;font-weight:bold">do</span> <span style="color:#000;font-weight:bold">{}</span> <span style="color:#204a87;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">((</span><span style="color:#204a87">Get-NetAdapter</span> <span style="color:#000">$NetworkAdapter</span><span style="color:#000;font-weight:bold">).</span><span style="color:#000">Status</span> <span style="color:#ce5c00;font-weight:bold">-ne</span> <span style="color:#4e9a06">&#34;Disabled&#34;</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#204a87">Enable-NetAdapter</span> <span style="color:#000">-Name</span> <span style="color:#000">$NetworkAdapter</span> <span style="color:#000">-Confirm</span><span style="color:#a40000">:</span><span style="color:#000">$false</span>
+    <span style="color:#204a87;font-weight:bold">do</span> <span style="color:#000;font-weight:bold">{}</span> <span style="color:#204a87;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">((</span><span style="color:#204a87">Get-NetAdapter</span> <span style="color:#000">$NetworkAdapter</span><span style="color:#000;font-weight:bold">).</span><span style="color:#000">Status</span> <span style="color:#ce5c00;font-weight:bold">-ne</span> <span style="color:#4e9a06">&#34;Up&#34;</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000">$NotifyIcon</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">ShowBalloonTip</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">30000</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;Attention!&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;Network Adapter Reset&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">[system.windows.forms.ToolTipIcon]</span><span style="color:#4e9a06">&#34;Warning&#34;</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">}</span></code></pre></div>
+<p>The module also provides a nice user interface to configure its settings and exit.</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell"><span style="color:#8f5902;font-style:italic"># Notification Icon</span>
+<span style="color:#000">[void][System.Reflection.Assembly]</span><span style="color:#000;font-weight:bold">::</span><span style="color:#000">LoadWithPartialName</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;System.windows.forms&#34;</span><span style="color:#000;font-weight:bold">)</span>
 
-<pre><code class="language-powershell"># Action - Reset Network Adapter
-$NetworkAdapter = 'Ethernet'
-Function ResetNetworkAdapter {
-    Disable-NetAdapter -Name $NetworkAdapter -Confirm:$false
-    do {} while ((Get-NetAdapter $NetworkAdapter).Status -ne &quot;Disabled&quot;)
-    Enable-NetAdapter -Name $NetworkAdapter -Confirm:$false
-    do {} while ((Get-NetAdapter $NetworkAdapter).Status -ne &quot;Up&quot;)
-    $NotifyIcon.ShowBalloonTip(30000,&quot;Attention!&quot;,&quot;Network Adapter Reset&quot;,[system.windows.forms.ToolTipIcon]&quot;Warning&quot;)
-}
-</code></pre>
+<span style="color:#000">$MainForm</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">New-Object</span> <span style="color:#000">System</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Windows</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Forms</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">form</span>
+<span style="color:#000">$NotifyIcon</span><span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">New-Object</span> <span style="color:#000">System</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Windows</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Forms</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">NotifyIcon</span>
+<span style="color:#000">$ContextMenu</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">New-Object</span> <span style="color:#000">System</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Windows</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Forms</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">ContextMenu</span>
 
-<p>The module also provides a nice user interface to configure its settings and exit.
-<div class="highlight"><pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="c"># Notification Icon</span>
-<span class="no">[void][System.Reflection.Assembly]</span><span class="p">::</span><span class="n">LoadWithPartialName</span><span class="p">(</span><span class="s2">&#34;System.windows.forms&#34;</span><span class="p">)</span>
+<span style="color:#000">$TimerRoutine</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">New-Object</span> <span style="color:#000">System</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Windows</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Forms</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Timer</span>
+<span style="color:#000">$TimerSessionTimeOut</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">New-Object</span> <span style="color:#000">System</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Windows</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Forms</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Timer</span>
+<span style="color:#000">$iconWarn</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">New-Object</span> <span style="color:#000">System</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Drawing</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Icon</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;$PSScriptRoot\Warning.ico&#34;</span><span style="color:#000;font-weight:bold">)</span>
 
-<span class="nv">$MainForm</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Windows</span><span class="p">.</span><span class="n">Forms</span><span class="p">.</span><span class="n">form</span>
-<span class="nv">$NotifyIcon</span><span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Windows</span><span class="p">.</span><span class="n">Forms</span><span class="p">.</span><span class="n">NotifyIcon</span>
-<span class="nv">$ContextMenu</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Windows</span><span class="p">.</span><span class="n">Forms</span><span class="p">.</span><span class="n">ContextMenu</span>
+<span style="color:#000">$MainForm</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">ShowInTaskbar</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$false</span>
+<span style="color:#000">$MainForm</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">WindowState</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;minimized&#34;</span>
 
-<span class="nv">$TimerRoutine</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Windows</span><span class="p">.</span><span class="n">Forms</span><span class="p">.</span><span class="n">Timer</span>
-<span class="nv">$TimerSessionTimeOut</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Windows</span><span class="p">.</span><span class="n">Forms</span><span class="p">.</span><span class="n">Timer</span>
-<span class="nv">$iconWarn</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Drawing</span><span class="p">.</span><span class="n">Icon</span><span class="p">(</span><span class="s2">&#34;$PSScriptRoot\Warning.ico&#34;</span><span class="p">)</span></code></pre></div></p>
-
-<pre><code class="language-powershell"># Notification Icon
-[void][System.Reflection.Assembly]::LoadWithPartialName(&quot;System.windows.forms&quot;)
-
-$MainForm = New-Object System.Windows.Forms.form
-$NotifyIcon= New-Object System.Windows.Forms.NotifyIcon
-$ContextMenu = New-Object System.Windows.Forms.ContextMenu
-
-$TimerRoutine = New-Object System.Windows.Forms.Timer
-$TimerSessionTimeOut = New-Object System.Windows.Forms.Timer
-$iconWarn = New-Object System.Drawing.Icon(&quot;$PSScriptRoot\Warning.ico&quot;)
-
-$MainForm.ShowInTaskbar = $false
-$MainForm.WindowState = &quot;minimized&quot;
-
-$NotifyIcon.Icon =  $iconWarn
-$NotifyIcon.Text = &quot;&quot;
-$NotifyIcon.ContextMenu = $ContextMenu
-$NotifyIcon.Visible = $True
-</code></pre>
-
+<span style="color:#000">$NotifyIcon</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Icon</span> <span style="color:#000;font-weight:bold">=</span>  <span style="color:#000">$iconWarn</span>
+<span style="color:#000">$NotifyIcon</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Text</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;&#34;</span>
+<span style="color:#000">$NotifyIcon</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">ContextMenu</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$ContextMenu</span>
+<span style="color:#000">$NotifyIcon</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Visible</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$True</span></code></pre></div>
 <p>The server launches a TCP Listener on a separate thread and waits for a client to issue instructions:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell"><span style="color:#8f5902;font-style:italic"># Launch TCP Listener and wait for commands</span>
+ <span style="color:#000">$scriptblock</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#204a87;font-weight:bold">param</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">$addr</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">$port</span><span style="color:#000;font-weight:bold">)</span> 
+    <span style="color:#8f5902;font-style:italic"># $addr = [ipaddress]&#39;127.0.0.1&#39;;$port = 1235</span>
+    <span style="color:#000">$endpoint</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">New-Object</span> <span style="color:#000">Net</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">IPEndPoint</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">$addr</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">$port</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000">$server</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">New-Object</span> <span style="color:#000">Net</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Sockets</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">TcpListener</span> <span style="color:#000">$endpoint</span>
 
-<pre><code class="language-powershell"># Launch TCP Listener and wait for commands
- $scriptblock = {
-    param($addr, $port) 
-    # $addr = [ipaddress]'127.0.0.1';$port = 1235
-    $endpoint = New-Object Net.IPEndPoint ($addr, $port)
-    $server = New-Object Net.Sockets.TcpListener $endpoint
+    <span style="color:#000">$exiting</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$False</span>
+    <span style="color:#204a87;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">-not</span> <span style="color:#000">$exiting</span><span style="color:#000;font-weight:bold">){</span>
+        <span style="color:#000">$server</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Start</span><span style="color:#000;font-weight:bold">()</span>
+        <span style="color:#204a87">Write-Output</span> <span style="color:#4e9a06">&#34;Listening&#34;</span>
+        <span style="color:#000">$client</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$server</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">AcceptTcpClient</span><span style="color:#000;font-weight:bold">()</span>
+        <span style="color:#000">$client</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">ReceiveTimeout</span><span style="color:#000;font-weight:bold">=</span> <span style="color:#000">1000</span>
+        <span style="color:#8f5902;font-style:italic"># [Console]::beep(1000,300)</span>
+        <span style="color:#000">$stream</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$client</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">GetStream</span><span style="color:#000;font-weight:bold">()</span>
+        <span style="color:#000">$reader</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">New-Object</span> <span style="color:#000">IO</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">StreamReader</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">$stream</span><span style="color:#000;font-weight:bold">)</span>
+        <span style="color:#000">$writer</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">New-Object</span> <span style="color:#000">IO</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">StreamWriter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">$stream</span><span style="color:#000;font-weight:bold">)</span>
+        <span style="color:#000">$writer</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">AutoFlush</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$true</span>
+        <span style="color:#204a87">Write-Output</span> <span style="color:#4e9a06">&#34;Client_Connected&#34;</span>
+        <span style="color:#000">$timeouts</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">0</span>
+        <span style="color:#000">$client_disconnected</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$false</span>
+        <span style="color:#204a87;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">-not</span> <span style="color:#000">$client_disconnected</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+            <span style="color:#204a87;font-weight:bold">Try</span><span style="color:#000;font-weight:bold">{</span>
+                <span style="color:#000">$command</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$reader</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">ReadLine</span><span style="color:#000;font-weight:bold">()</span>
+                <span style="color:#204a87;font-weight:bold">switch</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">$command</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+                <span style="color:#4e9a06">&#39;EXIT&#39;</span>  <span style="color:#000;font-weight:bold">{</span> <span style="color:#000">$exiting</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$True</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">break</span><span style="color:#000;font-weight:bold">}</span>
+                <span style="color:#4e9a06">&#39;PING&#39;</span>  <span style="color:#000;font-weight:bold">{</span> <span style="color:#000">$writer</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">WriteLine</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;PONG&#34;</span><span style="color:#000;font-weight:bold">)}</span>
+                <span style="color:#000;font-weight:bold">}</span>
+                <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">$command</span> <span style="color:#ce5c00;font-weight:bold">-ne</span> <span style="color:#4e9a06">&#39;PING&#39;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span><span style="color:#204a87">Write-Output</span> <span style="color:#000">$command</span><span style="color:#000;font-weight:bold">}</span>
 
-    $exiting = $False
-    while (-not $exiting){
-        $server.Start()
-        Write-Output &quot;Listening&quot;
-        $client = $server.AcceptTcpClient()
-        $client.ReceiveTimeout= 1000
-        # [Console]::beep(1000,300)
-        $stream = $client.GetStream()
-        $reader = New-Object IO.StreamReader($stream)
-        $writer = New-Object IO.StreamWriter($stream)
-        $writer.AutoFlush = $true
-        Write-Output &quot;Client_Connected&quot;
-        $timeouts = 0
-        $client_disconnected = $false
-        while (-not $client_disconnected) {
-            Try{
-                $command = $reader.ReadLine()
-                switch ($command) {
-                'EXIT'  { $exiting = $True; break}
-                'PING'  { $writer.WriteLine(&quot;PONG&quot;)}
-                }
-                if ($command -ne 'PING') {Write-Output $command}
+            <span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">Catch</span> <span style="color:#000;font-weight:bold">{</span><span style="color:#000">$command</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$null</span><span style="color:#000;font-weight:bold">}</span>
+            <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">$command</span> <span style="color:#ce5c00;font-weight:bold">-eq</span> <span style="color:#000">$null</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span><span style="color:#000">$timeouts</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$timeouts</span> <span style="color:#000;font-weight:bold">+</span><span style="color:#000">1</span><span style="color:#000;font-weight:bold">;</span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">$timeouts</span> <span style="color:#ce5c00;font-weight:bold">-ge</span> <span style="color:#000">3</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span><span style="color:#000">$client_disconnected</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$true</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">break</span><span style="color:#000;font-weight:bold">}}</span> <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span><span style="color:#000">$timeouts</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">0</span><span style="color:#000;font-weight:bold">}</span>
+            <span style="color:#204a87">Start-Sleep</span> <span style="color:#000">-Seconds</span> <span style="color:#000">1</span>
+        <span style="color:#000;font-weight:bold">}</span>
+        <span style="color:#204a87">Write-Output</span> <span style="color:#4e9a06">&#34;Client_Disconnected&#34;</span>
+        <span style="color:#000">$writer</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Dispose</span><span style="color:#000;font-weight:bold">();</span> <span style="color:#000">$writer</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$null</span>
+        <span style="color:#000">$reader</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Dispose</span><span style="color:#000;font-weight:bold">();</span> <span style="color:#000">$reader</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$null</span>
+        <span style="color:#000">$stream</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Dispose</span><span style="color:#000;font-weight:bold">();</span> <span style="color:#000">$stream</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$null</span>
+        <span style="color:#000">$client</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Dispose</span><span style="color:#000;font-weight:bold">();</span> <span style="color:#000">$client</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$null</span>
+        <span style="color:#204a87">Start-Sleep</span> <span style="color:#000">-Seconds</span> <span style="color:#000">1</span>
+    <span style="color:#000;font-weight:bold">}</span>
+    <span style="color:#000">$server</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">stop</span><span style="color:#000;font-weight:bold">()</span>
+<span style="color:#000;font-weight:bold">}</span>
 
-            } Catch {$command = $null}
-            if ($command -eq $null) {$timeouts = $timeouts +1;if ($timeouts -ge 3) {$client_disconnected = $true; break}} else {$timeouts = 0}
-            Start-Sleep -Seconds 1
-        }
-        Write-Output &quot;Client_Disconnected&quot;
-        $writer.Dispose(); $writer = $null
-        $reader.Dispose(); $reader = $null
-        $stream.Dispose(); $stream = $null
-        $client.Dispose(); $client = $null
-        Start-Sleep -Seconds 1
-    }
-    $server.stop()
-}
-
-$job = Start-Job -ScriptBlock $scriptblock -args $addr, $port
-</code></pre>
-
+<span style="color:#000">$job</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">Start-Job</span> <span style="color:#000">-ScriptBlock</span> <span style="color:#000">$scriptblock</span> <span style="color:#000">-args</span> <span style="color:#000">$addr</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">$port</span></code></pre></div>
 <h4 id="credential-switcher-client">Credential Switcher Client</h4>
 
 <p>The Client on the other hand checks there are valid credentials saved, asks for a PIN that is used to decrypt the safely stored credentials before switching.</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell"><span style="color:#8f5902;font-style:italic"># If credentials were not saved (or if they have expired), ask user for privileged and unprivileged credentials, encrypt them and save them</span>
+<span style="color:#000">$ValidCredentials</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$false</span>
+<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#204a87">Test-Path</span> <span style="color:#000">-Path</span> <span style="color:#000">$CredentialsFilePath</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">((</span><span style="color:#204a87">Get-Item</span> <span style="color:#000">$CredentialsFilePath</span><span style="color:#000;font-weight:bold">).</span><span style="color:#000">LastWriteTime</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">AddDays</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">$CredentialsValidityPeriod</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">-gt</span> <span style="color:#000">$Today</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#000">$ValidCredentials</span><span style="color:#000;font-weight:bold">=</span><span style="color:#000">$true</span><span style="color:#000;font-weight:bold">}}</span>
+<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">-not</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">$ValidCredentials</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>  
+    <span style="color:#8f5902;font-style:italic">#Ask user for credentials</span>
+    <span style="color:#000">$PrivilegedCredentials</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$host</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">ui</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">PromptForCredential</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Privileged Credentials&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;Please enter password&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">$PrivilegedCredentialsUsername</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000">$UnprivilegedCredentials</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$host</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">ui</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">PromptForCredential</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Unprivileged Credentials&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;Please enter password&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">$UnprivilegedCredentialsUsername</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">)</span>
 
-<pre><code class="language-powershell"># If credentials were not saved (or if they have expired), ask user for privileged and unprivileged credentials, encrypt them and save them
-$ValidCredentials = $false
-if (Test-Path -Path $CredentialsFilePath) {if ((Get-Item $CredentialsFilePath).LastWriteTime.AddDays($CredentialsValidityPeriod) -gt $Today) { $ValidCredentials=$true}}
-if (-not($ValidCredentials)) {  
-    #Ask user for credentials
-    $PrivilegedCredentials = $host.ui.PromptForCredential(&quot;Privileged Credentials&quot;, &quot;Please enter password&quot;, $PrivilegedCredentialsUsername, &quot;&quot;)
-    $UnprivilegedCredentials = $host.ui.PromptForCredential(&quot;Unprivileged Credentials&quot;, &quot;Please enter password&quot;, $UnprivilegedCredentialsUsername, &quot;&quot;)
-
-    #Ask use to set a Passcode
-    $KeySS =  Read-Host &quot;Please set Passcode&quot; -asSecureString
-    if (($KeySS.Length -lt $MinimumPinSize) -or ($KeySS.Length -gt 16)) {
-        Write-Host &quot;Pin must be between $MinimumPinSize to 16 characters long&quot;
-        Exit
-    }
+    <span style="color:#8f5902;font-style:italic">#Ask use to set a Passcode</span>
+    <span style="color:#000">$KeySS</span> <span style="color:#000;font-weight:bold">=</span>  <span style="color:#204a87">Read-Host</span> <span style="color:#4e9a06">&#34;Please set Passcode&#34;</span> <span style="color:#000">-asSecureString</span>
+    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">((</span><span style="color:#000">$KeySS</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Length</span> <span style="color:#ce5c00;font-weight:bold">-lt</span> <span style="color:#000">$MinimumPinSize</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">-or</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">$KeySS</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Length</span> <span style="color:#ce5c00;font-weight:bold">-gt</span> <span style="color:#000">16</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#204a87">Write-Host</span> <span style="color:#4e9a06">&#34;Pin must be between $MinimumPinSize to 16 characters long&#34;</span>
+        <span style="color:#000">Exit</span>
+    <span style="color:#000;font-weight:bold">}</span>
     
-    #Pad key up to 16 bytes long
-    for ($i=$KeySS.Length; $i -lt 16; $i++) {
-        $KeySS.AppendChar([char]32)
-    }    
+    <span style="color:#8f5902;font-style:italic">#Pad key up to 16 bytes long</span>
+    <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">$i</span><span style="color:#000;font-weight:bold">=</span><span style="color:#000">$KeySS</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Length</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000">$i</span> <span style="color:#ce5c00;font-weight:bold">-lt</span> <span style="color:#000">16</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000">$i</span><span style="color:#000;font-weight:bold">++)</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#000">$KeySS</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">AppendChar</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">[char]</span><span style="color:#000">32</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000;font-weight:bold">}</span>    
 
-    $EncryptedPrivileged = ConvertFrom-SecureString -SecureString $PrivilegedCredentials.Password -SecureKey $KeySS
-    $EncryptedUnprivileged = ConvertFrom-SecureString -SecureString $UnprivilegedCredentials.Password -SecureKey $KeySS
+    <span style="color:#000">$EncryptedPrivileged</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">ConvertFrom-SecureString</span> <span style="color:#000">-SecureString</span> <span style="color:#000">$PrivilegedCredentials</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Password</span> <span style="color:#000">-SecureKey</span> <span style="color:#000">$KeySS</span>
+    <span style="color:#000">$EncryptedUnprivileged</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">ConvertFrom-SecureString</span> <span style="color:#000">-SecureString</span> <span style="color:#000">$UnprivilegedCredentials</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Password</span> <span style="color:#000">-SecureKey</span> <span style="color:#000">$KeySS</span>
 
-    Write-Host $EncryptedPrivileged.Length
-    Write-Host $EncryptedUnprivileged.Length
+    <span style="color:#204a87">Write-Host</span> <span style="color:#000">$EncryptedPrivileged</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Length</span>
+    <span style="color:#204a87">Write-Host</span> <span style="color:#000">$EncryptedUnprivileged</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Length</span>
 
-    New-Item -Path $CredentialsFilePath -ItemType &quot;file&quot; -Value &quot;$EncryptedPrivileged`r`n&quot; -Force
-    Add-Content -Path $CredentialsFilePath -Value $EncryptedUnprivileged -Force
+    <span style="color:#204a87">New-Item</span> <span style="color:#000">-Path</span> <span style="color:#000">$CredentialsFilePath</span> <span style="color:#000">-ItemType</span> <span style="color:#4e9a06">&#34;file&#34;</span> <span style="color:#000">-Value</span> <span style="color:#4e9a06">&#34;$EncryptedPrivileged</span><span style="color:#4e9a06">`r`n</span><span style="color:#4e9a06">&#34;</span> <span style="color:#000">-Force</span>
+    <span style="color:#204a87">Add-Content</span> <span style="color:#000">-Path</span> <span style="color:#000">$CredentialsFilePath</span> <span style="color:#000">-Value</span> <span style="color:#000">$EncryptedUnprivileged</span> <span style="color:#000">-Force</span>
 
-    Write-Host &quot;Credentials saved to $CredentialsFilePath&quot;
-} else {
-    # Ask for Passcode, Decrypt and Mount
-    $KeySS =  Read-Host &quot;Please enter Passcode&quot; -asSecureString
-    if (($KeySS.Length -lt $MinimumPinSize) -or ($KeySS.Length -gt 16)) {
-        Write-Host &quot;Pin must be between $MinimumPinSize to 16 characters long&quot;
-        Exit
-    }
+    <span style="color:#204a87">Write-Host</span> <span style="color:#4e9a06">&#34;Credentials saved to $CredentialsFilePath&#34;</span>
+<span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#8f5902;font-style:italic"># Ask for Passcode, Decrypt and Mount</span>
+    <span style="color:#000">$KeySS</span> <span style="color:#000;font-weight:bold">=</span>  <span style="color:#204a87">Read-Host</span> <span style="color:#4e9a06">&#34;Please enter Passcode&#34;</span> <span style="color:#000">-asSecureString</span>
+    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">((</span><span style="color:#000">$KeySS</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Length</span> <span style="color:#ce5c00;font-weight:bold">-lt</span> <span style="color:#000">$MinimumPinSize</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">-or</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">$KeySS</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Length</span> <span style="color:#ce5c00;font-weight:bold">-gt</span> <span style="color:#000">16</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#204a87">Write-Host</span> <span style="color:#4e9a06">&#34;Pin must be between $MinimumPinSize to 16 characters long&#34;</span>
+        <span style="color:#000">Exit</span>
+    <span style="color:#000;font-weight:bold">}</span>
     
-    #Pad key up to 16 bytes long
-    for ($i=$KeySS.Length; $i -lt 16; $i++) {
-        $KeySS.AppendChar([char]32)
-    }   
+    <span style="color:#8f5902;font-style:italic">#Pad key up to 16 bytes long</span>
+    <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">$i</span><span style="color:#000;font-weight:bold">=</span><span style="color:#000">$KeySS</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Length</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000">$i</span> <span style="color:#ce5c00;font-weight:bold">-lt</span> <span style="color:#000">16</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000">$i</span><span style="color:#000;font-weight:bold">++)</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#000">$KeySS</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">AppendChar</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">[char]</span><span style="color:#000">32</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000;font-weight:bold">}</span>   
 
-    ($EncryptedPrivileged, $EncryptedUnprivileged) = Get-Content -Path &quot;$CredentialsFilePath&quot;
+    <span style="color:#000;font-weight:bold">(</span><span style="color:#000">$EncryptedPrivileged</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">$EncryptedUnprivileged</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">Get-Content</span> <span style="color:#000">-Path</span> <span style="color:#4e9a06">&#34;$CredentialsFilePath&#34;</span>
 
-    $PrivilegedPasswordSS = ConvertTo-SecureString -String $EncryptedPrivileged -SecureKey $KeySS
-    $UnprivilegedPasswordSS = ConvertTo-SecureString -String $EncryptedUnprivileged -SecureKey $KeySS
+    <span style="color:#000">$PrivilegedPasswordSS</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">ConvertTo-SecureString</span> <span style="color:#000">-String</span> <span style="color:#000">$EncryptedPrivileged</span> <span style="color:#000">-SecureKey</span> <span style="color:#000">$KeySS</span>
+    <span style="color:#000">$UnprivilegedPasswordSS</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">ConvertTo-SecureString</span> <span style="color:#000">-String</span> <span style="color:#000">$EncryptedUnprivileged</span> <span style="color:#000">-SecureKey</span> <span style="color:#000">$KeySS</span>
 
-    $PrivilegedCredentials = New-Object System.Management.Automation.PsCredential($PrivilegedCredentialsUsername, $PrivilegedPasswordSS)
-    $UnprivilegedCredentials = New-Object System.Management.Automation.PsCredential($UnprivilegedCredentialsUsername, $UnprivilegedPasswordSS)
-}
-</code></pre>
-
+    <span style="color:#000">$PrivilegedCredentials</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">New-Object</span> <span style="color:#000">System</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Management</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Automation</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">PsCredential</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">$PrivilegedCredentialsUsername</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">$PrivilegedPasswordSS</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000">$UnprivilegedCredentials</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">New-Object</span> <span style="color:#000">System</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Management</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Automation</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">PsCredential</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">$UnprivilegedCredentialsUsername</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">$UnprivilegedPasswordSS</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">}</span></code></pre></div>
 <p>With the credentials in place, the script initiates the switching process:</p>
-
-<pre><code class="language-powershell">#Switch
-net use /delete $NetworkShareDriveLetter /y
-net use /delete $NetworkSharePath /y
-cmdkey /delete:$NetworkHost
-RequestServerReset
-do{
-    $Result = $null
-    Start-Sleep -Milliseconds  500
-    $Result= &amp;{ net use $NetworkShareDriveLetter $NetworkSharePath /user:$($PrivilegedCredentials.UserName) &quot;$($PrivilegedCredentials.GetNetworkCredential().Password)&quot; } *&gt;&amp;1
-} while (-not $Result.Contains('The command completed successfully.'))
-</code></pre>
-
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell"><span style="color:#8f5902;font-style:italic">#Switch</span>
+<span style="color:#000">net</span> <span style="color:#000">use</span> <span style="color:#000;font-weight:bold">/</span><span style="color:#000">delete</span> <span style="color:#000">$NetworkShareDriveLetter</span> <span style="color:#000;font-weight:bold">/</span><span style="color:#000">y</span>
+<span style="color:#000">net</span> <span style="color:#000">use</span> <span style="color:#000;font-weight:bold">/</span><span style="color:#000">delete</span> <span style="color:#000">$NetworkSharePath</span> <span style="color:#000;font-weight:bold">/</span><span style="color:#000">y</span>
+<span style="color:#000">cmdkey</span> <span style="color:#000;font-weight:bold">/</span><span style="color:#000">delete</span><span style="color:#a40000">:</span><span style="color:#000">$NetworkHost</span>
+<span style="color:#000">RequestServerReset</span>
+<span style="color:#204a87;font-weight:bold">do</span><span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">$Result</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$null</span>
+    <span style="color:#204a87">Start-Sleep</span> <span style="color:#000">-Milliseconds</span>  <span style="color:#000">500</span>
+    <span style="color:#000">$Result</span><span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">&amp;{</span> <span style="color:#000">net</span> <span style="color:#000">use</span> <span style="color:#000">$NetworkShareDriveLetter</span> <span style="color:#000">$NetworkSharePath</span> <span style="color:#000;font-weight:bold">/</span><span style="color:#000">user</span><span style="color:#a40000">:</span><span style="color:#000;font-weight:bold">$(</span><span style="color:#000">$PrivilegedCredentials</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">UserName</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">$(</span><span style="color:#000">$PrivilegedCredentials</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">GetNetworkCredential</span><span style="color:#000;font-weight:bold">().</span><span style="color:#000">Password</span><span style="color:#000;font-weight:bold">)</span><span style="color:#4e9a06">&#34;</span> <span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">*&gt;&amp;</span><span style="color:#000">1</span>
+<span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">-not</span> <span style="color:#000">$Result</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Contains</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;The command completed successfully.&#39;</span><span style="color:#000;font-weight:bold">))</span></code></pre></div>
 <p>After the predefined time has passed, inform the user that credentials are about to be switched back:</p>
-
-<pre><code class="language-powershell">do {
-Start-Sleep -Milliseconds  ($SessionTimeOut * 60000)
-    #$msgBoxInput = [Windows.Forms.MessageBox]::Show('Credentials are going to be switched back to unpriviledged. If you would like to continue working with admin credentials please press cancel','Credential Switching', [Windows.Forms.MessageBoxButtons]::OKCancel, [Windows.Forms.MessageBoxIcon]::Question)
-    $msgBoxInput = Start-GCTimeoutDialog -Title &quot;Credential Switcher&quot; -Message &quot;Credentials are going to be switched back to unpriviledged. If you would like to continue working with privileged credentials please press Cancel.&quot; -Seconds 10
-} while ($msgBoxInput -eq 'Cancel')
-</code></pre>
-
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell"><span style="color:#204a87;font-weight:bold">do</span> <span style="color:#000;font-weight:bold">{</span>
+<span style="color:#204a87">Start-Sleep</span> <span style="color:#000">-Milliseconds</span>  <span style="color:#000;font-weight:bold">(</span><span style="color:#000">$SessionTimeOut</span> <span style="color:#000;font-weight:bold">*</span> <span style="color:#000">60000</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#8f5902;font-style:italic">#$msgBoxInput = [Windows.Forms.MessageBox]::Show(&#39;Credentials are going to be switched back to unpriviledged. If you would like to continue working with admin credentials please press cancel&#39;,&#39;Credential Switching&#39;, [Windows.Forms.MessageBoxButtons]::OKCancel, [Windows.Forms.MessageBoxIcon]::Question)</span>
+    <span style="color:#000">$msgBoxInput</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">Start-GCTimeoutDialog</span> <span style="color:#000">-Title</span> <span style="color:#4e9a06">&#34;Credential Switcher&#34;</span> <span style="color:#000">-Message</span> <span style="color:#4e9a06">&#34;Credentials are going to be switched back to unpriviledged. If you would like to continue working with privileged credentials please press Cancel.&#34;</span> <span style="color:#000">-Seconds</span> <span style="color:#000">10</span>
+<span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">$msgBoxInput</span> <span style="color:#ce5c00;font-weight:bold">-eq</span> <span style="color:#4e9a06">&#39;Cancel&#39;</span><span style="color:#000;font-weight:bold">)</span></code></pre></div>
 <p>Switch credentials back and save the credentials in Windows Credentials Vault so that they can be used next time the user restarts the connection.</p>
-
-<pre><code class="language-powershell"># SwitchCredentials Back
-net use /delete $NetworkShareDriveLetter /y
-net use /delete $NetworkSharePath /y
-cmdkey /delete:$NetworkHost
-RequestServerReset
-do{
-    $Result = $null
-    Start-Sleep -Milliseconds  500
-    $Result= &amp;{ net use $NetworkShareDriveLetter $NetworkSharePath /user:$($UnprivilegedCredentials.UserName) &quot;$($UnprivilegedCredentials.GetNetworkCredential().Password)&quot; /persistent:yes} *&gt;&amp;1
-} while (-not $Result.Contains('The command completed successfully.'))
-cmdkey /add:$NetworkHost /user:$($UnprivilegedCredentials.UserName) /pass:&quot;$($UnprivilegedCredentials.GetNetworkCredential().Password)&quot;
-
-</code></pre>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell"><span style="color:#8f5902;font-style:italic"># SwitchCredentials Back</span>
+<span style="color:#000">net</span> <span style="color:#000">use</span> <span style="color:#000;font-weight:bold">/</span><span style="color:#000">delete</span> <span style="color:#000">$NetworkShareDriveLetter</span> <span style="color:#000;font-weight:bold">/</span><span style="color:#000">y</span>
+<span style="color:#000">net</span> <span style="color:#000">use</span> <span style="color:#000;font-weight:bold">/</span><span style="color:#000">delete</span> <span style="color:#000">$NetworkSharePath</span> <span style="color:#000;font-weight:bold">/</span><span style="color:#000">y</span>
+<span style="color:#000">cmdkey</span> <span style="color:#000;font-weight:bold">/</span><span style="color:#000">delete</span><span style="color:#a40000">:</span><span style="color:#000">$NetworkHost</span>
+<span style="color:#000">RequestServerReset</span>
+<span style="color:#204a87;font-weight:bold">do</span><span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">$Result</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">$null</span>
+    <span style="color:#204a87">Start-Sleep</span> <span style="color:#000">-Milliseconds</span>  <span style="color:#000">500</span>
+    <span style="color:#000">$Result</span><span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">&amp;{</span> <span style="color:#000">net</span> <span style="color:#000">use</span> <span style="color:#000">$NetworkShareDriveLetter</span> <span style="color:#000">$NetworkSharePath</span> <span style="color:#000;font-weight:bold">/</span><span style="color:#000">user</span><span style="color:#a40000">:</span><span style="color:#000;font-weight:bold">$(</span><span style="color:#000">$UnprivilegedCredentials</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">UserName</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">$(</span><span style="color:#000">$UnprivilegedCredentials</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">GetNetworkCredential</span><span style="color:#000;font-weight:bold">().</span><span style="color:#000">Password</span><span style="color:#000;font-weight:bold">)</span><span style="color:#4e9a06">&#34;</span> <span style="color:#000;font-weight:bold">/</span><span style="color:#000">persistent</span><span style="color:#a40000">:</span><span style="color:#000">yes</span><span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">*&gt;&amp;</span><span style="color:#000">1</span>
+<span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">-not</span> <span style="color:#000">$Result</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Contains</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;The command completed successfully.&#39;</span><span style="color:#000;font-weight:bold">))</span>
+<span style="color:#000">cmdkey</span> <span style="color:#000;font-weight:bold">/</span><span style="color:#000">add</span><span style="color:#a40000">:</span><span style="color:#000">$NetworkHost</span> <span style="color:#000;font-weight:bold">/</span><span style="color:#000">user</span><span style="color:#a40000">:</span><span style="color:#000;font-weight:bold">$(</span><span style="color:#000">$UnprivilegedCredentials</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">UserName</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">/</span><span style="color:#000">pass</span><span style="color:#a40000">:</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">$(</span><span style="color:#000">$UnprivilegedCredentials</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">GetNetworkCredential</span><span style="color:#000;font-weight:bold">().</span><span style="color:#000">Password</span><span style="color:#000;font-weight:bold">)</span><span style="color:#4e9a06">&#34;</span></code></pre></div>
             </article>
           </div>
           
@@ -608,7 +577,7 @@ title="github icon"></i>
   </div>
   <script src="https://www.alvaroorgaz.com/js/jquery.min.js"></script>
 <script src="https://www.alvaroorgaz.com/js/jquerymigrate.js"></script>
-<script src="https://www.alvaroorgaz.com/js/production.min.js?v=1570384351"></script>
+<script src="https://www.alvaroorgaz.com/js/production.min.js?v=1570384752"></script>
 
 </body>
 </html>
