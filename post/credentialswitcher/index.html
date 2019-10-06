@@ -45,9 +45,9 @@
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
-<link href="https://www.alvaroorgaz.com/css/style.css?v=1570383723" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+<link href="https://www.alvaroorgaz.com/css/style.css?v=1570384351" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
 
-<link href="https://www.alvaroorgaz.com/css/custom.css?v=1570383723" rel="stylesheet" type='text/css' media='all'>
+<link href="https://www.alvaroorgaz.com/css/custom.css?v=1570384351" rel="stylesheet" type='text/css' media='all'>
 <link rel="shortcut icon" href="https://www.alvaroorgaz.com/img/favicon.ico" type="image/x-icon">
 <link rel="icon" href="https://www.alvaroorgaz.com/img/favicon.ico" type="image/x-icon">
 
@@ -264,16 +264,16 @@ Function ResetNetworkAdapter {
 </code></pre>
 
 <p>The module also provides a nice user interface to configure its settings and exit.
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell"><span style="color:#75715e"># Notification Icon</span>
-<span style="color:#66d9ef">[void][System.Reflection.Assembly]</span>::LoadWithPartialName(<span style="color:#e6db74">&#34;System.windows.forms&#34;</span>)
+<div class="highlight"><pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="c"># Notification Icon</span>
+<span class="no">[void][System.Reflection.Assembly]</span><span class="p">::</span><span class="n">LoadWithPartialName</span><span class="p">(</span><span class="s2">&#34;System.windows.forms&#34;</span><span class="p">)</span>
 
-$MainForm = New-Object System.Windows.Forms.form
-$NotifyIcon= New-Object System.Windows.Forms.NotifyIcon
-$ContextMenu = New-Object System.Windows.Forms.ContextMenu
+<span class="nv">$MainForm</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Windows</span><span class="p">.</span><span class="n">Forms</span><span class="p">.</span><span class="n">form</span>
+<span class="nv">$NotifyIcon</span><span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Windows</span><span class="p">.</span><span class="n">Forms</span><span class="p">.</span><span class="n">NotifyIcon</span>
+<span class="nv">$ContextMenu</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Windows</span><span class="p">.</span><span class="n">Forms</span><span class="p">.</span><span class="n">ContextMenu</span>
 
-$TimerRoutine = New-Object System.Windows.Forms.Timer
-$TimerSessionTimeOut = New-Object System.Windows.Forms.Timer
-$iconWarn = New-Object System.Drawing.Icon(<span style="color:#e6db74">&#34;$PSScriptRoot\Warning.ico&#34;</span>)</code></pre></div></p>
+<span class="nv">$TimerRoutine</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Windows</span><span class="p">.</span><span class="n">Forms</span><span class="p">.</span><span class="n">Timer</span>
+<span class="nv">$TimerSessionTimeOut</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Windows</span><span class="p">.</span><span class="n">Forms</span><span class="p">.</span><span class="n">Timer</span>
+<span class="nv">$iconWarn</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Drawing</span><span class="p">.</span><span class="n">Icon</span><span class="p">(</span><span class="s2">&#34;$PSScriptRoot\Warning.ico&#34;</span><span class="p">)</span></code></pre></div></p>
 
 <pre><code class="language-powershell"># Notification Icon
 [void][System.Reflection.Assembly]::LoadWithPartialName(&quot;System.windows.forms&quot;)
@@ -608,7 +608,7 @@ title="github icon"></i>
   </div>
   <script src="https://www.alvaroorgaz.com/js/jquery.min.js"></script>
 <script src="https://www.alvaroorgaz.com/js/jquerymigrate.js"></script>
-<script src="https://www.alvaroorgaz.com/js/production.min.js?v=1570383723"></script>
+<script src="https://www.alvaroorgaz.com/js/production.min.js?v=1570384351"></script>
 
 </body>
 </html>
