@@ -12,14 +12,12 @@
     
     
     <item>
-      <title>Credential Switcher - A PowerShell script to easily switch between credentials to access a SMB network share</title>
+      <title>Credential Switcher</title>
       <link>https://www.alvaroorgaz.com/post/credentialswitcher/</link>
       <pubDate>Sun, 06 Oct 2019 21:08:33 +0530</pubDate>
       
       <guid>https://www.alvaroorgaz.com/post/credentialswitcher/</guid>
-      <description>&lt;h1 id=&#34;credential-switcher&#34;&gt;Credential Switcher&lt;/h1&gt;
-
-&lt;p&gt;A simple PowerShell script that allows the user to temporarily switch to use different credentials with higher permissions to carry out specific tasks and reverts back to the original credentials automatically after some time or once the user confirms the task is completed.&lt;/p&gt;</description>
+      <description>&lt;p&gt;A simple PowerShell script that allows the user to temporarily switch to use different credentials with higher permissions to carry out specific tasks and reverts back to the original credentials automatically after some time or once the user confirms the task is completed.&lt;/p&gt;</description>
     </item>
     
   </channel>
