@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https:\/\/www.alvaroorgaz.com\/"
+        },
+        "articleSection" : "post",
+        "name" : "Credential Switcher - A PowerShell script to easily switch between credentials to access a SMB network share",
+        "headline" : "Credential Switcher - A PowerShell script to easily switch between credentials to access a SMB network share",
+        "description" : "\x3ch1 id=\x22credential-switcher\x22\x3eCredential Switcher\x3c\/h1\x3e\n\n\x3cp\x3eA simple PowerShell script that allows the user to temporarily switch to use different credentials with higher permissions to carry out specific tasks and reverts back to the original credentials automatically after some time or once the user confirms the task is completed.\x3c\/p\x3e",
+        "inLanguage" : "en",
+        "author" : "",
+        "creator" : "",
+        "publisher": "",
+        "accountablePerson" : "",
+        "copyrightHolder" : "",
+        "copyrightYear" : "2019",
+        "datePublished": "2019-10-06 21:08:33 \x2b0530 \x2b0530",
+        "dateModified" : "2019-10-06 21:08:33 \x2b0530 \x2b0530",
+        "url" : "https:\/\/www.alvaroorgaz.com\/post\/credentialswitcher\/",
+        "wordCount" : "1370",
+        "image" : "https://www.alvaroorgaz.com//img/Software-Engineering-2.jpg"",
+        "keywords" : [ ""Ransomware"",""PowerShell"","Blog" ]   
+    }
+    </script>
+
+
+ <title>Credential Switcher - A PowerShell script to easily switch between credentials to access a SMB network share </title>
+
+
+<meta name="description" content="Álvaro Orgaz Cybersecurity Projects Portfolio" />
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" id="ct-tracks-google-fonts-css" href="https://fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+<link href="https://www.alvaroorgaz.com/css/style.css?v=1570381881" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+
+<link href="https://www.alvaroorgaz.com/css/custom.css?v=1570381881" rel="stylesheet" type='text/css' media='all'>
+<link rel="shortcut icon" href="https://www.alvaroorgaz.com/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://www.alvaroorgaz.com/img/favicon.ico" type="image/x-icon">
+
+
+</head>
+
+
+<body class="post-template-default single single-post single-format-standard ct-body singular singular-post not-front standard">
+
+  <div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+      <div class='top-navigation'>
+        <div class='container'>
+
+  <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+    <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fas fa-plus"></i></button>
+
+    <div class="menu">
+
+      <ul id="menu-secondary-items" class="menu-secondary-items">
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/cybersecurity">cybersecurity</a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <ul class="social-media-icons">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li>
+      <a href="https://www.linkedin.com/in/alvaroorgaz" data-animate-hover="pulse" class="linkedin" target="_blank">
+        <i class="fab fa-linkedin-in" title="linkedin"></i>
+        <span class="screen-reader-text">linkedin</span>
+      </a>
+    </li>
+    
+
+    
+
+
+    
+    <li>
+      <a href="https://github.com/aorgazf" data-animate-hover="pulse" class="github" target="_blank">
+        <i class="fab fa-github" title="github"></i>
+        <span class="screen-reader-text">github</span>
+      </a>
+    </li>
+    
+
+
+    
+
+    
+
+
+  </ul></div>
+
+      </div>
+
+      <div class="container">
+        <div id="title-info" class="title-info">
+  <div id='site-title' class='site-title'>
+    
+    <a href="/"> Álvaro Orgaz </a>
+    </div>
+  </div>
+  <button id="toggle-navigation" class="toggle-navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+  <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    
+    <p class="site-description">CISSP PMP</p>
+    
+
+    <div class="menu">
+      <ul id="menu-primary-items" class="menu-primary-items">
+        
+        
+        <li class='menu-item menu-item-type-custom menu-item-object-custom '>
+          <a href="https://www.alvaroorgaz.com/">Home</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://www.alvaroorgaz.com/about/">About</a>
+          
+        </li>
+        
+      </ul>
+    </div>
+
+  </div>
+
+      </div>
+    </header>
+
+    <div id="main" class="main" role="main">
+
+      
+  
+  
+    
+  
+  
+  <div id="loop-container" class="loop-container">
+    
+    <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+
+      <div class='featured-image lazy lazy-bg-image'  data-background="https://www.alvaroorgaz.com/img/Software-Engineering-2.jpg">
+      </div>
+      
+        <div class="entry-meta">
+          <span class="date">06 October</span>	<span> / </span>
+
+          <span class="author">
+            <a href="https://www.alvaroorgaz.com/" title="Posts by Alvaro Orgaz" rel="author">Alvaro Orgaz</a>
+          </span>
+
+
+          
+          <span class="category">
+            <span> / </span>
+
+            <a href="/categories/cybersecurity">Cybersecurity</a>
+          </span>
+          
+
+
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'> Credential Switcher - A PowerShell script to easily switch between credentials to access a SMB network share</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              <h1 id="credential-switcher">Credential Switcher</h1>
+
+<p>A simple PowerShell script that allows the user to temporarily switch to use different credentials with higher permissions to carry out specific tasks and reverts back to the original credentials automatically after some time or once the user confirms the task is completed.</p>
+
+<h3 id="the-problem">The problem</h3>
+
+<p>The number of <strong>ransomware</strong> attacks is on the rise as it is proving to be a very profitable activity. When a computer is infected with ransomware, it starts to encrypt all files in the local computer and on the network to cause as much damage as possible.</p>
+
+<p>In many personal and business environments users access information stored on shared network folders. These folders usually serve as repositories of files. The more data these folders contain, the more valuable they become.</p>
+
+<p>The best protection against ransomware is to ensure any valuable data is being backed up on a regular basis both locally and on the cloud. An <strong>additional layer of protection</strong> to minimise the damage that malware could cause if it were to gain access to a computer, we should apply the principle of <strong>least privilege</strong>, restricting the access rights of users to just those absolutely required.</p>
+
+<p>Most of the time users don&rsquo;t require full read and write permissions when accessing repositories; they only require writing permissions when they need to save file changes or when they need to reorganise the repository.</p>
+
+<p>In the same way that it is best practice not to grant users with admin rights on their computer accounts for their daily tasks, it would be desirable to grant network users only with reading access to repositories and provide them with <strong>separate credentials with writing permissions</strong> for when they need to do so.</p>
+
+<p>Unfortunately Windows does not provide a simple mechanism to implement this. When Windows connects to a network share using SMB protocol, it establishes a SMB session using the credentials saved or provided when the connection is established. But Windows implementation of the protocol does not allow multiple concurrent connections to the same resource with different credentials.</p>
+
+<p>Attempting to establish a new connection with different credentials results in the following error:</p>
+
+<p><img src="https://raw.githubusercontent.com/aorgazf/credential-switcher/master/img/error%201219%20w.png" alt="error 1219 w" /></p>
+
+<p>Using the <code>net use</code> command renders the same results:</p>
+
+<p><img src="https://raw.githubusercontent.com/aorgazf/credential-switcher/master/img/error%201219.png" alt="error 1219" /></p>
+
+<p>The <code>get-smbconnection</code> cmdlet shows that there were already connections established under another username:</p>
+
+<p><img src="https://raw.githubusercontent.com/aorgazf/credential-switcher/master/img/get-smbconnection_alvaro.png" alt="get-smbconnection.png" /></p>
+
+<p>In order to establish a new connection with different credentials all current SMB connections need to be closed first, but Windows does not provide a simple mechanism to close those open connections and switch credentials.</p>
+
+<h3 id="the-solution">The solution</h3>
+
+<p>A simple PowerShell script that allows the user to temporarily switch to use different credentials with higher permissions to carry out specific tasks and reverts back to the original credentials automatically after some time or once the user confirms the task is completed.</p>
+
+<p>Windows <code>net use</code> command can be used to connect to network folders, however <code>net use /delete</code> does not close the opened SMB connections. The following screenshot shows the results of  <code>Get-SmbConnection</code> cmdlet confirming that there are lingering connections after the use of <code>net use /delete</code>.</p>
+
+<p><img src="https://raw.githubusercontent.com/aorgazf/credential-switcher/master/img/.png" alt=".png" /></p>
+
+<p>After some research, the best method to ensure the connections are closed is to disable the network adapter through which they were created. This method works better than the alternative of restarting Windows Explorer process. The downside is that disabling and re-enabling a network adapter requires administrator privileges.</p>
+
+<p>That on its own is not a problem, but the commands to connect to a network share and to store user&rsquo;s credentials need to be run in the context of the user.</p>
+
+<p>For this reason the script is divided in two modules: Server and Client</p>
+
+<h4 id="credential-switcher-server">Credential Switcher Server</h4>
+
+<p>The Server module is meant to be run under administrator privileges when the computer is turned on. Its main purpose is to reset (disable and re-enable) the network adapter in order to close any lingering SMB connections.</p>
+
+<pre><code class="language-powershell"># Action - Reset Network Adapter
+$NetworkAdapter = 'Ethernet'
+Function ResetNetworkAdapter {
+    Disable-NetAdapter -Name $NetworkAdapter -Confirm:$false
+    do {} while ((Get-NetAdapter $NetworkAdapter).Status -ne &quot;Disabled&quot;)
+    Enable-NetAdapter -Name $NetworkAdapter -Confirm:$false
+    do {} while ((Get-NetAdapter $NetworkAdapter).Status -ne &quot;Up&quot;)
+    $NotifyIcon.ShowBalloonTip(30000,&quot;Attention!&quot;,&quot;Network Adapter Reset&quot;,[system.windows.forms.ToolTipIcon]&quot;Warning&quot;)
+}
+</code></pre>
+
+<p>The module also provides a nice user interface to configure its settings and exit.</p>
+
+<pre><code class="language-powershell"># Notification Icon
+[void][System.Reflection.Assembly]::LoadWithPartialName(&quot;System.windows.forms&quot;)
+
+$MainForm = New-Object System.Windows.Forms.form
+$NotifyIcon= New-Object System.Windows.Forms.NotifyIcon
+$ContextMenu = New-Object System.Windows.Forms.ContextMenu
+
+$TimerRoutine = New-Object System.Windows.Forms.Timer
+$TimerSessionTimeOut = New-Object System.Windows.Forms.Timer
+$iconWarn = New-Object System.Drawing.Icon(&quot;$PSScriptRoot\Warning.ico&quot;)
+
+$MainForm.ShowInTaskbar = $false
+$MainForm.WindowState = &quot;minimized&quot;
+
+$NotifyIcon.Icon =  $iconWarn
+$NotifyIcon.Text = &quot;&quot;
+$NotifyIcon.ContextMenu = $ContextMenu
+$NotifyIcon.Visible = $True
+</code></pre>
+
+<p>The server launches a TCP Listener on a separate thread and waits for a client to issue instructions:</p>
+
+<pre><code class="language-powershell"># Launch TCP Listener and wait for commands
+ $scriptblock = {
+    param($addr, $port) 
+    # $addr = [ipaddress]'127.0.0.1';$port = 1235
+    $endpoint = New-Object Net.IPEndPoint ($addr, $port)
+    $server = New-Object Net.Sockets.TcpListener $endpoint
+
+    $exiting = $False
+    while (-not $exiting){
+        $server.Start()
+        Write-Output &quot;Listening&quot;
+        $client = $server.AcceptTcpClient()
+        $client.ReceiveTimeout= 1000
+        # [Console]::beep(1000,300)
+        $stream = $client.GetStream()
+        $reader = New-Object IO.StreamReader($stream)
+        $writer = New-Object IO.StreamWriter($stream)
+        $writer.AutoFlush = $true
+        Write-Output &quot;Client_Connected&quot;
+        $timeouts = 0
+        $client_disconnected = $false
+        while (-not $client_disconnected) {
+            Try{
+                $command = $reader.ReadLine()
+                switch ($command) {
+                'EXIT'  { $exiting = $True; break}
+                'PING'  { $writer.WriteLine(&quot;PONG&quot;)}
+                }
+                if ($command -ne 'PING') {Write-Output $command}
+
+            } Catch {$command = $null}
+            if ($command -eq $null) {$timeouts = $timeouts +1;if ($timeouts -ge 3) {$client_disconnected = $true; break}} else {$timeouts = 0}
+            Start-Sleep -Seconds 1
+        }
+        Write-Output &quot;Client_Disconnected&quot;
+        $writer.Dispose(); $writer = $null
+        $reader.Dispose(); $reader = $null
+        $stream.Dispose(); $stream = $null
+        $client.Dispose(); $client = $null
+        Start-Sleep -Seconds 1
+    }
+    $server.stop()
+}
+
+$job = Start-Job -ScriptBlock $scriptblock -args $addr, $port
+</code></pre>
+
+<h4 id="credential-switcher-client">Credential Switcher Client</h4>
+
+<p>The Client on the other hand checks there are valid credentials saved, asks for a PIN that is used to decrypt the safely stored credentials before switching.</p>
+
+<pre><code class="language-powershell"># If credentials were not saved (or if they have expired), ask user for privileged and unprivileged credentials, encrypt them and save them
+$ValidCredentials = $false
+if (Test-Path -Path $CredentialsFilePath) {if ((Get-Item $CredentialsFilePath).LastWriteTime.AddDays($CredentialsValidityPeriod) -gt $Today) { $ValidCredentials=$true}}
+if (-not($ValidCredentials)) {  
+    #Ask user for credentials
+    $PrivilegedCredentials = $host.ui.PromptForCredential(&quot;Privileged Credentials&quot;, &quot;Please enter password&quot;, $PrivilegedCredentialsUsername, &quot;&quot;)
+    $UnprivilegedCredentials = $host.ui.PromptForCredential(&quot;Unprivileged Credentials&quot;, &quot;Please enter password&quot;, $UnprivilegedCredentialsUsername, &quot;&quot;)
+
+    #Ask use to set a Passcode
+    $KeySS =  Read-Host &quot;Please set Passcode&quot; -asSecureString
+    if (($KeySS.Length -lt $MinimumPinSize) -or ($KeySS.Length -gt 16)) {
+        Write-Host &quot;Pin must be between $MinimumPinSize to 16 characters long&quot;
+        Exit
+    }
+    
+    #Pad key up to 16 bytes long
+    for ($i=$KeySS.Length; $i -lt 16; $i++) {
+        $KeySS.AppendChar([char]32)
+    }    
+
+    $EncryptedPrivileged = ConvertFrom-SecureString -SecureString $PrivilegedCredentials.Password -SecureKey $KeySS
+    $EncryptedUnprivileged = ConvertFrom-SecureString -SecureString $UnprivilegedCredentials.Password -SecureKey $KeySS
+
+    Write-Host $EncryptedPrivileged.Length
+    Write-Host $EncryptedUnprivileged.Length
+
+    New-Item -Path $CredentialsFilePath -ItemType &quot;file&quot; -Value &quot;$EncryptedPrivileged`r`n&quot; -Force
+    Add-Content -Path $CredentialsFilePath -Value $EncryptedUnprivileged -Force
+
+    Write-Host &quot;Credentials saved to $CredentialsFilePath&quot;
+} else {
+    # Ask for Passcode, Decrypt and Mount
+    $KeySS =  Read-Host &quot;Please enter Passcode&quot; -asSecureString
+    if (($KeySS.Length -lt $MinimumPinSize) -or ($KeySS.Length -gt 16)) {
+        Write-Host &quot;Pin must be between $MinimumPinSize to 16 characters long&quot;
+        Exit
+    }
+    
+    #Pad key up to 16 bytes long
+    for ($i=$KeySS.Length; $i -lt 16; $i++) {
+        $KeySS.AppendChar([char]32)
+    }   
+
+    ($EncryptedPrivileged, $EncryptedUnprivileged) = Get-Content -Path &quot;$CredentialsFilePath&quot;
+
+    $PrivilegedPasswordSS = ConvertTo-SecureString -String $EncryptedPrivileged -SecureKey $KeySS
+    $UnprivilegedPasswordSS = ConvertTo-SecureString -String $EncryptedUnprivileged -SecureKey $KeySS
+
+    $PrivilegedCredentials = New-Object System.Management.Automation.PsCredential($PrivilegedCredentialsUsername, $PrivilegedPasswordSS)
+    $UnprivilegedCredentials = New-Object System.Management.Automation.PsCredential($UnprivilegedCredentialsUsername, $UnprivilegedPasswordSS)
+}
+</code></pre>
+
+<p>With the credentials in place, the script initiates the switching process:</p>
+
+<pre><code class="language-powershell">#Switch
+net use /delete $NetworkShareDriveLetter /y
+net use /delete $NetworkSharePath /y
+cmdkey /delete:$NetworkHost
+RequestServerReset
+do{
+    $Result = $null
+    Start-Sleep -Milliseconds  500
+    $Result= &amp;{ net use $NetworkShareDriveLetter $NetworkSharePath /user:$($PrivilegedCredentials.UserName) &quot;$($PrivilegedCredentials.GetNetworkCredential().Password)&quot; } *&gt;&amp;1
+} while (-not $Result.Contains('The command completed successfully.'))
+</code></pre>
+
+<p>After the predefined time has passed, inform the user that credentials are about to be switched back:</p>
+
+<pre><code class="language-powershell">do {
+Start-Sleep -Milliseconds  ($SessionTimeOut * 60000)
+    #$msgBoxInput = [Windows.Forms.MessageBox]::Show('Credentials are going to be switched back to unpriviledged. If you would like to continue working with admin credentials please press cancel','Credential Switching', [Windows.Forms.MessageBoxButtons]::OKCancel, [Windows.Forms.MessageBoxIcon]::Question)
+    $msgBoxInput = Start-GCTimeoutDialog -Title &quot;Credential Switcher&quot; -Message &quot;Credentials are going to be switched back to unpriviledged. If you would like to continue working with privileged credentials please press Cancel.&quot; -Seconds 10
+} while ($msgBoxInput -eq 'Cancel')
+</code></pre>
+
+<p>Switch credentials back and save the credentials in Windows Credentials Vault so that they can be used next time the user restarts the connection.</p>
+
+<pre><code class="language-powershell"># SwitchCredentials Back
+net use /delete $NetworkShareDriveLetter /y
+net use /delete $NetworkSharePath /y
+cmdkey /delete:$NetworkHost
+RequestServerReset
+do{
+    $Result = $null
+    Start-Sleep -Milliseconds  500
+    $Result= &amp;{ net use $NetworkShareDriveLetter $NetworkSharePath /user:$($UnprivilegedCredentials.UserName) &quot;$($UnprivilegedCredentials.GetNetworkCredential().Password)&quot; /persistent:yes} *&gt;&amp;1
+} while (-not $Result.Contains('The command completed successfully.'))
+cmdkey /add:$NetworkHost /user:$($UnprivilegedCredentials.UserName) /pass:&quot;$($UnprivilegedCredentials.GetNetworkCredential().Password)&quot;
+
+</code></pre>
+            </article>
+          </div>
+          
+      <div class='entry-meta-bottom'>
+        
+
+  <div class="entry-categories"><p><span>Categories</span>
+    
+    <a href="/categories/cybersecurity" title="View all posts in Cybersecurity">Cybersecurity</a>
+  </p>
+</div>
+
+
+
+<div class="entry-tags"><p><span>Tags</span>
+  
+  <a href="/tags/ransomware" title="View all posts tagged Ransomware">Ransomware</a>
+  
+  <a href="/tags/powershell" title="View all posts tagged PowerShell">PowerShell</a>
+  
+
+</p></div>	</div>
+
+	
+<div class="author-meta">
+
+  <div class="author">
+    	
+      <img alt='Alvaro Orgaz' src="https://www.gravatar.com/avatar/97c104bc334ae27bece34791f76d41b0?s=100&d=identicon" class='avatar avatar-72 photo' height='72' width='72'>
+    
+    <span>
+      Written by:<a href="https://www.alvaroorgaz.com/" title="Posts by Alvaro Orgaz" rel="author">Alvaro Orgaz</a> </span>
+    </div>
+    <div class="bio">
+      
+      
+      <p>Alvaro Orgaz is an Information Security professional and enthusiast about Artificial Intelligence, IoT, Reverse Engineering and Ethical Hacking.</p>
+      
+      
+	
+      
+
+    
+
+
+  
+
+<a class="linkedin" target="_blank"
+href="https://www.linkedin.com/in/alvaroorgaz">
+<i class="fab fa-linkedin"
+title="linkedin icon"></i>
+</a>
+
+
+
+
+
+
+
+
+
+<a class="github" target="_blank"
+href="https://github.com/aorgazf">
+<i class="fab fa-github"
+title="github icon"></i>
+</a>
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+<section id="comments" class="comments">
+  
+
+  
+
+
+
+
+</section>
+</div>
+
+ 
+
+
+
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+	<h1>
+    
+    <a href=""> Álvaro Orgaz </a>
+    
+	</h1>
+
+			
+			<p class="site-description">CISSP PMP</p>
+			
+
+		<div id="menu-footer" class="menu-container menu-footer" role="navigation">
+		<div class="menu">
+
+      <ul id="menu-footer-items" class="menu-footer-items">
+        
+</ul>
+
+</div>	</div>
+
+<ul class="social-media-icons">
+
+        
+
+        
+
+
+        
+
+        
+
+        
+
+        
+        <li>
+        <a href="https://www.linkedin.com/in/alvaroorgaz" class="linkedin" target="_blank">
+            <i class="fab fa-linkedin-in" title="linkedin"></i>
+            <span class="screen-reader-text">linkedin</span>
+        </a>
+        </li>
+        
+
+        
+
+
+        
+        <li>
+        <a href="https://github.com/aorgazf"  class="github" target="_blank">
+            <i class="fab fa-github" title="github"></i>
+            <span class="screen-reader-text">github</span>
+        </a>
+        </li>
+        
+
+
+        
+
+        
+
+				</ul>	<div class="design-credit">
+		
+		<p>&copy; 2019 Álvaro Orgaz</p>
+		
+		<p>Nederburg Hugo Theme by <a href="https://appernetic.io">Appernetic</a>.</p>
+		
+	</div>
+</footer>
+
+  </div>
+  <script src="https://www.alvaroorgaz.com/js/jquery.min.js"></script>
+<script src="https://www.alvaroorgaz.com/js/jquerymigrate.js"></script>
+<script src="https://www.alvaroorgaz.com/js/production.min.js?v=1570381881"></script>
+
+</body>
+</html>

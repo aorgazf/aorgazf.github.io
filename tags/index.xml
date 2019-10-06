@@ -6,10 +6,28 @@
     <description>Recent content in Tags on Álvaro Orgaz</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 05 Nov 2018 21:05:33 +0530</lastBuildDate>
+    <lastBuildDate>Sun, 06 Oct 2019 21:08:33 +0530</lastBuildDate>
     
 	<atom:link href="https://www.alvaroorgaz.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>PowerShell</title>
+      <link>https://www.alvaroorgaz.com/tags/powershell/</link>
+      <pubDate>Sun, 06 Oct 2019 21:08:33 +0530</pubDate>
+      
+      <guid>https://www.alvaroorgaz.com/tags/powershell/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ransomware</title>
+      <link>https://www.alvaroorgaz.com/tags/ransomware/</link>
+      <pubDate>Sun, 06 Oct 2019 21:08:33 +0530</pubDate>
+      
+      <guid>https://www.alvaroorgaz.com/tags/ransomware/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>ESP8266</title>

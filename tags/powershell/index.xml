@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Álvaro Orgaz</title>
-    <link>https://www.alvaroorgaz.com/post/</link>
-    <description>Recent content in Posts on Álvaro Orgaz</description>
+    <title>PowerShell on Álvaro Orgaz</title>
+    <link>https://www.alvaroorgaz.com/tags/powershell/</link>
+    <description>Recent content in PowerShell on Álvaro Orgaz</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 06 Oct 2019 21:08:33 +0530</lastBuildDate>
     
-	<atom:link href="https://www.alvaroorgaz.com/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.alvaroorgaz.com/tags/powershell/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -20,15 +20,6 @@
       <description>&lt;h1 id=&#34;credential-switcher&#34;&gt;Credential Switcher&lt;/h1&gt;
 
 &lt;p&gt;A simple PowerShell script that allows the user to temporarily switch to use different credentials with higher permissions to carry out specific tasks and reverts back to the original credentials automatically after some time or once the user confirms the task is completed.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>SuperDucky</title>
-      <link>https://www.alvaroorgaz.com/post/superducky/</link>
-      <pubDate>Mon, 05 Nov 2018 21:05:33 +0530</pubDate>
-      
-      <guid>https://www.alvaroorgaz.com/post/superducky/</guid>
-      <description>&lt;p&gt;SuperDucky is an enhanced version of &lt;a href=&#34;https://hakshop.com/products/usb-rubber-ducky-deluxe&#34;&gt;Hack5 Rubber Ducky&lt;/a&gt; BadUSB.&lt;/p&gt;</description>
     </item>
     
   </channel>
