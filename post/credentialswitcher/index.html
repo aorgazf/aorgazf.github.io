@@ -45,9 +45,9 @@
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
-<link href="https://www.alvaroorgaz.com/css/style.css?v=1570385897" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+<link href="https://www.alvaroorgaz.com/css/style.css?v=1570387195" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
 
-<link href="https://www.alvaroorgaz.com/css/custom.css?v=1570385897" rel="stylesheet" type='text/css' media='all'>
+<link href="https://www.alvaroorgaz.com/css/custom.css?v=1570387195" rel="stylesheet" type='text/css' media='all'>
 <link rel="shortcut icon" href="https://www.alvaroorgaz.com/img/favicon.ico" type="image/x-icon">
 <link rel="icon" href="https://www.alvaroorgaz.com/img/favicon.ico" type="image/x-icon">
 
@@ -240,7 +240,7 @@
 
 <p>Windows <code>net use</code> command can be used to connect to network folders, however <code>net use /delete</code> does not close the opened SMB connections. The following screenshot shows the results of  <code>Get-SmbConnection</code> cmdlet confirming that there are lingering connections after the use of <code>net use /delete</code>.</p>
 
-<p><img src="https://raw.githubusercontent.com/aorgazf/credential-switcher/master/img/.png" alt=".png" /></p>
+<p><img src="https://raw.githubusercontent.com/aorgazf/credential-switcher/master/img/get-smbconnection_after_net_use_delete.png" alt="get-smbconnection_after_net_use_delete.png" /></p>
 
 <p>After some research, the best method to ensure the connections are closed is to disable the network adapter through which they were created. This method works better than the alternative of restarting Windows Explorer process. The downside is that disabling and re-enabling a network adapter requires administrator privileges.</p>
 
@@ -578,7 +578,7 @@ title="github icon"></i>
   </div>
   <script src="https://www.alvaroorgaz.com/js/jquery.min.js"></script>
 <script src="https://www.alvaroorgaz.com/js/jquerymigrate.js"></script>
-<script src="https://www.alvaroorgaz.com/js/production.min.js?v=1570385897"></script>
+<script src="https://www.alvaroorgaz.com/js/production.min.js?v=1570387195"></script>
 
 </body>
 </html>
